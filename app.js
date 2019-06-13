@@ -5,8 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose')
 var cors = require('cors')
+var dotenv = require('dotenv').config()
 
-mongoose.connect('mongodb+srv://xhaxs:Kartar123!@cluster0-zauig.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true})
+
+console.log(process.env.DB_USERNAME)
+console.log(process.env.DB_PASSWORD)
+mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-zauig.mongodb.net/test?retryWrites=true&w=majority`, {useNewUrlParser: true})
 
 
 var indexRouter = require('./routes/blog');
