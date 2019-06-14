@@ -8,6 +8,15 @@ let generateToken = (username) => {
   return crypto.createHash('sha1').update(username + random).digest('hex')
 }
 
+let getPasswordHash = (password, salt) => {
+  let fString = salt + "" + password
+  return crypto.createHash('sha1').update(fString).digest('hex')
+}
+
+let randomSaltString = () => {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+}
+
 let checkAuthInfo = async (req, res, next) => {
   console.log("checking Auth Info...")
   let authCred = req.body['user']
@@ -45,10 +54,14 @@ router.post('/signup', async (req, res, next) => {
   let password = req.body['password']
   let sessionToken = generateToken(username)
   
+  let saltString = randomSaltString()
+  let hashPassword = getPasswordHash(password, saltString)
+  console.log(hashPassword)
   let user = new models.User({
     'username': username,
-    'password': password,
-    'authToken': sessionToken
+    'password': hashPassword,
+    'authToken': sessionToken,
+    'saltString': saltString
   })
 
   try{
@@ -70,9 +83,11 @@ router.post('/signin', async (req, res, next) => {
   username = req.body.username
   password = req.body.password
   let user = null
+  console.log("Enter try block ....")
   try{
-    user = await models.User.findOne({'username': username})    
-    if(user.password == password){
+    user = await models.User.findOne({'username': username})
+    let hashPassword = getPasswordHash(password, user.saltString)
+    if(user.password == hashPassword){
       return res.json({
         'status': 200,
         'message': "Authentication Successful",

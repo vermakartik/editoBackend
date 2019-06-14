@@ -18,6 +18,7 @@ let AuthSchema = new mongoose.Schema({
         unique: true
     },
     password: String,
+    saltString: String,
     authToken: String,
 })
 
