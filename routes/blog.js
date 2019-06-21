@@ -119,4 +119,16 @@ router.post('/save', (req, res, next) => checkAuthInfo(req, res, next), async (r
   })
 })
 
+router.delete('/', (req, res, next) => checkAuthInfo(req, res, next), async (req, res, next) => {
+  try{
+    await models.Blog.deleteOne({"_id": req.body['_id']})
+  } catch (e) {
+    next(e)
+  }
+  return res.json({
+    'status': 200,
+    'message': 'deleted'
+  })
+})
+
 module.exports = router;
