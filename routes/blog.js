@@ -8,6 +8,7 @@ var mongoose = require('mongoose')
 
 let checkAuthInfo = async (req, res, next) => {
   console.log("checking Auth Info...")
+  console.log(req.body)
   let authCred = req.body['user']
   console.log(authCred)
   if(!authCred){
@@ -119,7 +120,8 @@ router.post('/save', (req, res, next) => checkAuthInfo(req, res, next), async (r
   })
 })
 
-router.delete('/', (req, res, next) => checkAuthInfo(req, res, next), async (req, res, next) => {
+router.post('/delete', (req, res, next) => checkAuthInfo(req, res, next), async (req, res, next) => {
+  console.log(req.body)
   try{
     await models.Blog.deleteOne({"_id": req.body['_id']})
   } catch (e) {
