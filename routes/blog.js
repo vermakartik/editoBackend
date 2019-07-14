@@ -86,7 +86,7 @@ router.get('/:name', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   let blogs = null;
   try{
-    blogs = await models.Blog.find().select({'title': 1, 'author': 1, publishDate: 1, 'backColor': 1, type: 1})
+    blogs = await models.Blog.find().sort("-publishDate").select({'title': 1, 'author': 1, publishDate: 1, 'backColor': 1, type: 1})
   } catch (e){
     next(e)
   }
