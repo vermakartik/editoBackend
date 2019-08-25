@@ -10,6 +10,10 @@ let BlogSchema = new mongoose.Schema({
     type: String,
     backColor: String, 
     publishDate: String,
+    isPublished: {
+        type: Boolean,
+        default: false
+    },
 })
 
 let AuthSchema = new mongoose.Schema({

@@ -47,7 +47,8 @@ router.post("/", (req, res, next) => checkAuthInfo(req, res, next), async (req, 
     text: req.body['text'],
     type: req.body['type'],
     publishDate: req.body['publishDate'],
-    backColor: req.body['backColor']
+    backColor: req.body['backColor'],
+    isPublished: false
   })
   console.log(blog)
   try{
@@ -86,7 +87,7 @@ router.get('/:name', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   let blogs = null;
   try{
-    blogs = await models.Blog.find().sort("-publishDate").select({'title': 1, 'author': 1, publishDate: 1, 'backColor': 1, type: 1})
+    blogs = await models.Blog.find().sort("-publishDate").select({'title': 1, 'author': 1, publishDate: 1, 'backColor': 1, type: 1, isPublished: 1})
   } catch (e){
     next(e)
   }
@@ -107,7 +108,8 @@ router.post('/save', (req, res, next) => checkAuthInfo(req, res, next), async (r
           text: req.body['text'],
           type: req.body['type'],
           publishDate: req.body['publishDate'],
-          backColor: req.body['backColor']
+          backColor: req.body['backColor'],
+          isPublished: req.body['isPublished']
         }
       }
     )
