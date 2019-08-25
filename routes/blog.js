@@ -48,7 +48,7 @@ router.post("/", (req, res, next) => checkAuthInfo(req, res, next), async (req, 
     type: req.body['type'],
     publishDate: req.body['publishDate'],
     backColor: req.body['backColor'],
-    isPublished: false
+    isPublished: req.body['isPublished']
   })
   console.log(blog)
   try{
