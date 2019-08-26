@@ -11,7 +11,7 @@ var dotenv = require('dotenv').config()
 // console.log(process.env.DB_USERNAME)
 // console.log(process.env.DB_PASSWORD)
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-zauig.mongodb.net/test?retryWrites=true&w=majority`, {useNewUrlParser: true})
+mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-zauig.mongodb.net/test?retryWrites=true&r=majority`, {useNewUrlParser: true})
 
 // mongoose.connect(`mongodb://localhost:27017/test`, {useNewUrlParser: true})
 
